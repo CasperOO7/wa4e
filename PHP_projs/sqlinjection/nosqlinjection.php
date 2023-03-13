@@ -1,20 +1,19 @@
-<?php 
+<?php
 require_once "../pdo/pdo.php";
-if ( isset($_POST['email']) && isset($_POST['password']) ) {
-   echo("please dont try sql injection\n");
-   $e = $_POST['email'];
-   $p = $_POST['password'];
-   $sql = "SELECT name FROM users
-        WHERE email = '$e'
-        AND password = '$p'
-        ";
-        echo "<pre>\n$sql\n</pre>\n";
-   $stmt = $pdo->query($sql);
-   //print_r($row=$stmt->fetch(PDO::FETCH_ASSOC));
-   //echo  $stmt->rowCount();
+if ( isset($_POST['email']) && isset($_POST['password'])  ) {
+    echo("dont try sql injection wont work\n");
+    $sql = "SELECT name FROM users
+         WHERE email = :em AND password = :pw";
+    echo "<pre>\n$sql\n</pre>\n";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array(
+        ':em' => $_POST['email'],
+        ':pw' => $_POST['password']));
+    $row = $stmt->fetch(PDO::FETCH_ASSOC);
+    print_r($row);
 }
-   ?>
-   <!DOCTYPE html>
+?>
+<!DOCTYPE html>
    <html lang="en">
    <head>
     <meta charset="UTF-8">
