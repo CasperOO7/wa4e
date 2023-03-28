@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Example Page</title>
+</head>
+<body>
+<script type="text/javascript" src="./jquery-3.6.4.js"></script>
+
+
+<form id="fr">
+<input type="text" name="target" value="Enter Your Base Salary Here: "
+style="vertical-align: middle;">
+<img src="./giphy.gif" alt="no gif" id="gif" height="25" style="vertical-align: middle; display: none;">
+</form>
+<div id="result" style="color: brown;"></div>
+
+<script type="text/javascript">
+	$('#fr').change(function(event){
+		event.preventDefault();
+		$('#gif').show();
+		var form=$('#fr')
+		var txt = form.find('input[name="target"]').val();
+		console.log('sending to server');
+		$.post('server.php',{'val':txt},
+		function(data){
+			console.log(data);
+			$('#result').empty().append(data);
+			$('#gif').hide();
+		}
+		
+		)
+		return false;
+	}
+	);
+</script>
+
+</body>
+</html>
